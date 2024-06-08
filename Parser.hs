@@ -8,7 +8,7 @@ parse :: Parser a -> String -> [(a, String)]
 parse (Parser p) = p
 
 instance Functor Parser where
-  -- fmap :: (a -> b) -> f a -> f b
+  -- fmap :: (a -> b) -> Parser a -> Parser b
   fmap f (Parser p) = Parser $ \input -> [(f x, input') | (x, input') <- p input]
 
 instance Applicative Parser where
@@ -26,6 +26,6 @@ instance Monad Parser where
 
 instance Alternative Parser where
   -- empty :: f a
-  empty = Parser $ \cs -> []
+  empty = Parser $ \_ -> []
   -- (<|>) :: f a -> f a -> f a
   (Parser p1) <|> (Parser p2) = Parser $ \input -> p1 input <|> p2 input
